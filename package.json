@@ -1,0 +1,18 @@
+{
+  "name": "axion-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Axion Financial Data API",
+  "type": "module",
+  "bin": {
+    "axion-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "keywords": ["mcp", "financial-data", "stocks", "crypto", "etf"],
+  "author": "Axion",
+  "license": "MIT"
+}
