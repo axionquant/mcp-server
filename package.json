@@ -1,10 +1,10 @@
 {
-  "name": "axion-mcp-server",
+  "name": "@axionquant/mcp",
   "version": "1.0.0",
   "description": "MCP Server for Axion Financial Data API",
   "type": "module",
   "bin": {
-    "axion-mcp": "./index.js"
+    "axion-mcp": "index.js"
   },
   "scripts": {
     "start": "node index.js"
@@ -12,7 +12,23 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4"
   },
-  "keywords": ["mcp", "financial-data", "stocks", "crypto", "etf"],
+  "keywords": [
+    "mcp",
+    "financial-data",
+    "stocks",
+    "crypto",
+    "etf"
+  ],
   "author": "Axion",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axionquant/mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axionquant/mcp-server/issues"
+  },
+  "homepage": "https://github.com/axionquant/mcp-server#readme"
 }
