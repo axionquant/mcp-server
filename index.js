@@ -659,7 +659,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "crypto_ticker",
+        name: "crypto_quote",
         description: "Get details for a specific cryptocurrency by ticker symbol",
         inputSchema: {
           type: "object",
@@ -704,7 +704,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "forex_ticker",
+        name: "forex_quote",
         description: "Get details for a specific forex pair by ticker symbol",
         inputSchema: {
           type: "object",
@@ -745,7 +745,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "future_ticker",
+        name: "future_quote",
         description: "Get details for a specific futures contract by ticker symbol",
         inputSchema: {
           type: "object",
@@ -786,49 +786,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "indices_ticker",
-        description: "Get details for a specific index by ticker symbol",
-        inputSchema: {
-          type: "object",
-          properties: {
-            ticker: {
-              type: "string",
-              description: "Index ticker symbol (e.g., 'AXJO', 'AEX', 'ATX')"
-            }
-          },
-          required: ["ticker"]
-        }
-      },
-      {
-        name: "indices_prices",
-        description: "Get historical price data for an index",
-        inputSchema: {
-          type: "object",
-          properties: {
-            ticker: {
-              type: "string",
-              description: "Index ticker symbol (e.g., 'AXJO', 'AEX', 'ATX')"
-            }
-          },
-          required: ["ticker"]
-        }
-      },
-
-      {
-        name: "indices_tickers",
-        description: "Get list of index tickers with optional filtering by exchange",
-        inputSchema: {
-          type: "object",
-          properties: {
-            exchange: {
-              type: "string",
-              description: "Filter by exchange (e.g., 'ASX', 'AMS', 'VIE')"
-            }
-          }
-        }
-      },
-      {
-        name: "indices_ticker",
+        name: "indices_quote",
         description: "Get details for a specific index by ticker symbol",
         inputSchema: {
           type: "object",
@@ -874,7 +832,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "stocks_ticker",
+        name: "stocks_quote",
         description: "Get details for a specific stock by ticker symbol",
         inputSchema: {
           type: "object",
@@ -1252,7 +1210,7 @@ type: args.type
         result = await makeApiRequest(endpoint, { method: 'GET' });
         break;
 
-      case "crypto_ticker":
+      case "crypto_quote":
         if (!args.ticker) {
           throw new Error("Cryptocurrency ticker symbol is required");
         }
@@ -1277,7 +1235,7 @@ exchange: args.exchange
         result = await makeApiRequest(endpoint, { method: 'GET' });
         break;
 
-      case "forex_ticker":
+      case "forex_quote":
         if (!args.ticker) {
           throw new Error("Forex ticker symbol is required");
         }
@@ -1301,7 +1259,7 @@ exchange: args.exchange
         result = await makeApiRequest(endpoint, { method: 'GET' });
         break;
 
-      case "future_ticker":
+      case "future_quote":
         if (!args.ticker) {
           throw new Error("Futures ticker symbol is required");
         }
@@ -1325,7 +1283,7 @@ exchange: args.exchange
         result = await makeApiRequest(endpoint, { method: 'GET' });
         break;
 
-      case "indices_ticker":
+      case "indices_quote":
         if (!args.ticker) {
           throw new Error("Index ticker symbol is required");
         }
@@ -1351,7 +1309,7 @@ exchange: args.exchange
         result = await makeApiRequest(endpoint, { method: 'GET' });
         break;
 
-      case "stocks_ticker":
+      case "stocks_quote":
         if (!args.ticker) {
           throw new Error("Stock ticker symbol is required");
         }
