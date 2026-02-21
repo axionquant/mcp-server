@@ -1,40 +1,22 @@
 # Axion MCP Server
 
-A Model Context Protocol (MCP) server that provides LLM access to the Axion financial data API endpoints.
-
-## Overview
-
-This MCP server exposes all Axion product API endpoints as LLM-accessible tools, enabling AI assistants to query financial data including stocks, cryptocurrencies, forex, futures, indices, ETFs, credit ratings, ESG data, and supply chain information.
+A Model Context Protocol (MCP) server that gives LLMs access to the [Axion](https://axionquant.com) financial data API - covering stocks, crypto, forex, futures, indices, ETFs, economics, news, sentiment, filings, financials, and more.
 
 ## Installation
 
-1. Install dependencies:
 ```bash
-cd server/mcp-server
-npm install
+npm i @axionquant/mcp
 ```
 
-2. Configure environment variables:
-```bash
-cp .env.example .env
-```
+## Configuration
 
-Edit `.env` and set:
-- `API_KEY`: Your API authentication key (if required)
+[Get your free API key](https://axionquant.com/dashboard/api-keys)
 
-## Usage
+### Claude Desktop
 
-### Running the Server
+Add the following to your Claude Desktop config file:
 
-```bash
-npm start
-```
-
-### Configuring with Claude Desktop
-
-Add this to your Claude Desktop configuration file:
-
-**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ```json
@@ -42,7 +24,7 @@ Add this to your Claude Desktop configuration file:
   "mcpServers": {
     "axion-financial-data": {
       "command": "node",
-      "args": ["/absolute/path/to/axion/server/mcp-server/index.js"],
+      "args": ["/absolute/path/to/node_modules/@axionquant/mcp/index.js"],
       "env": {
         "API_KEY": "your_api_key_here"
       }
@@ -51,111 +33,186 @@ Add this to your Claude Desktop configuration file:
 }
 ```
 
-### Using with Other MCP Clients
+### Other MCP Clients
 
-The server uses stdio transport, making it compatible with any MCP client. Configure according to your client's documentation.
+The server uses stdio transport and is compatible with any MCP client. Set the `API_KEY` environment variable and configure according to your client's documentation.
 
 ## Available Tools
 
-### Stock Market Tools
-- `get_stock_tickers` - Get all stock tickers with optional country/exchange filtering
-- `get_stock_ticker_info` - Get detailed info for a specific stock
-- `get_stock_prices` - Get historical price data for a stock
+### Stocks
+| Tool | Description |
+|------|-------------|
+| `stocks_tickers` | List stock tickers, optionally filtered by country or exchange |
+| `stocks_quote` | Get current quote/details for a stock ticker |
+| `stocks_prices` | Get historical price data (supports `from`, `to`, `frame`) |
 
-### Cryptocurrency Tools
-- `get_crypto_tickers` - Get all crypto tickers
-- `get_crypto_ticker_info` - Get detailed info for a specific crypto
-- `get_crypto_prices` - Get historical price data for a crypto
+### Crypto
+| Tool | Description |
+|------|-------------|
+| `crypto_tickers` | List cryptocurrency tickers, optionally filtered by type |
+| `crypto_quote` | Get current details for a cryptocurrency |
+| `crypto_prices` | Get historical price data |
 
-### Forex Tools
-- `get_forex_tickers` - Get all forex pairs
-- `get_forex_ticker_info` - Get detailed info for a forex pair
-- `get_forex_prices` - Get historical price data for a forex pair
+### Forex
+| Tool | Description |
+|------|-------------|
+| `forex_tickers` | List forex pairs, optionally filtered by country or exchange |
+| `forex_quote` | Get current details for a forex pair |
+| `forex_prices` | Get historical price data |
 
-### Futures Tools
-- `get_futures_tickers` - Get all futures tickers
-- `get_futures_ticker_info` - Get detailed info for a futures contract
-- `get_futures_prices` - Get historical price data for a futures contract
+### Futures
+| Tool | Description |
+|------|-------------|
+| `futures_tickers` | List futures tickers, optionally filtered by exchange |
+| `futures_quote` | Get current details for a futures contract |
+| `futures_prices` | Get historical price data |
 
-### Indices Tools
-- `get_indices_tickers` - Get all market indices
-- `get_indices_ticker_info` - Get detailed info for an index
-- `get_indices_prices` - Get historical price data for an index
+### Indices
+| Tool | Description |
+|------|-------------|
+| `indices_tickers` | List index tickers, optionally filtered by exchange |
+| `indices_quote` | Get current details for an index |
+| `indices_prices` | Get historical price data |
 
-### ETF Tools
-- `get_etf_fund_data` - Get comprehensive fund data including weights and regions
-- `get_etf_holdings` - Get detailed holdings information
-- `get_etf_exposure` - Get exposure analysis
+### ETFs
+| Tool | Description |
+|------|-------------|
+| `etf_fund` | Get ETF fund information including ratings and metrics |
+| `etf_holdings` | Get top holdings with weights, shares, and market value |
+| `etf_exposure` | Find which ETFs hold a specific stock ticker |
 
-### Credit Rating Tools
-- `search_credit_entities` - Search S&P credit rating database
-- `get_credit_ratings` - Get credit ratings for a specific entity
+### Economics (FRED)
+| Tool | Description |
+|------|-------------|
+| `econ_search` | Search for economic datasets |
+| `econ_dataset` | Get a time series by dataset ID |
+| `econ_calendar` | Get economic calendar events (filterable by country, currency, category, importance) |
 
-### ESG Tools
-- `get_esg_data` - Get ESG (Environmental, Social, Governance) data for a ticker
+### News
+| Tool | Description |
+|------|-------------|
+| `news_general` | Get general market news headlines |
+| `news_ticker` | Get news for a specific company |
+| `news_country` | Get news for a specific country |
+| `news_category` | Get news by category (e.g. `business`, `technology`) |
 
-### Supply Chain Tools
-- `get_company_customers` - Get a company's customers
-- `get_company_peers` - Get peer companies (competitors)
-- `get_company_suppliers` - Get a company's suppliers
+### Sentiment
+| Tool | Description |
+|------|-------------|
+| `sentiment_all` | Get combined sentiment (social + news + analyst) for a ticker |
+| `sentiment_social` | Get social media sentiment |
+| `sentiment_news` | Get news sentiment |
+| `sentiment_analyst` | Get analyst/AI sentiment |
+
+### Profiles
+| Tool | Description |
+|------|-------------|
+| `profiles_profile` | Get full asset profile |
+| `profiles_recommendation` | Get analyst recommendation trend |
+| `profiles_statistics` | Get key statistics |
+| `profiles_summary` | Get summary detail |
+| `profiles_calendar` | Get earnings and dividend calendar events |
+| `profiles_info` | Get company info / summary profile |
+
+### Earnings
+| Tool | Description |
+|------|-------------|
+| `earnings_history` | Get historical earnings |
+| `earnings_trend` | Get earnings trend |
+| `earnings_index` | Get index trend |
+| `earnings_report` | Get earnings report for a specific year and quarter |
+
+### SEC Filings
+| Tool | Description |
+|------|-------------|
+| `filings_recent` | Get recent filings, optionally filtered by form type |
+| `filings_forms` | Get filings by form type (e.g. `10-K`, `8-K`) |
+| `filings_desc_forms` | List all available SEC form types |
+| `filings_search` | Search filings by year/quarter |
+
+### Financials
+| Tool | Description |
+|------|-------------|
+| `financials_revenue` | Historical revenue |
+| `financials_net_income` | Historical net income |
+| `financials_total_assets` | Historical total assets |
+| `financials_total_liabilities` | Historical total liabilities |
+| `financials_stockholders_equity` | Historical stockholders equity |
+| `financials_current_assets` | Historical current assets |
+| `financials_current_liabilities` | Historical current liabilities |
+| `financials_operating_cash_flow` | Historical operating cash flow |
+| `financials_capital_expenditures` | Historical capital expenditures |
+| `financials_free_cash_flow` | Historical free cash flow |
+| `financials_shares_outstanding_basic` | Historical basic shares outstanding |
+| `financials_shares_outstanding_diluted` | Historical diluted shares outstanding |
+| `financials_metrics` | Calculated financial metrics |
+| `financials_snapshot` | Snapshot of key financial data |
+
+### Insiders & Ownership
+| Tool | Description |
+|------|-------------|
+| `insiders_funds` | Fund ownership data |
+| `insiders_individuals` | Insider holders (individuals) |
+| `insiders_institutions` | Institutional ownership |
+| `insiders_ownership` | Major holders breakdown |
+| `insiders_activity` | Net share purchase activity |
+| `insiders_transactions` | Insider transactions |
+
+### ESG
+| Tool | Description |
+|------|-------------|
+| `esg_data` | Get ESG (Environmental, Social, Governance) scores for a ticker |
+
+### Supply Chain
+| Tool | Description |
+|------|-------------|
+| `supply_chain_customers` | Get a company's customers |
+| `supply_chain_peers` | Get peer companies / competitors |
+| `supply_chain_suppliers` | Get a company's suppliers |
+
+### Credit
+| Tool | Description |
+|------|-------------|
+| `credit_search` | Search the S&P credit rating database by organization name |
+| `credit_ratings` | Get credit ratings for a specific organization by ID |
+
+### Web Traffic
+| Tool | Description |
+|------|-------------|
+| `webtraffic_traffic` | Get website traffic data for a company |
 
 ## Example Queries
 
-Once configured with an LLM client like Claude Desktop, you can ask:
+Once connected to an LLM like Claude, you can ask natural language questions such as:
 
-- "What are the current stock tickers for NASDAQ?"
-- "Get me the historical prices for Bitcoin over the last month"
-- "What are the top holdings in the SPY ETF?"
-- "Search for Apple's credit rating"
-- "Show me Tesla's ESG data"
+- "What are the NASDAQ-listed stock tickers?"
+- "Get Bitcoin's price history for the last 30 days"
+- "What are SPY's top 10 holdings?"
+- "Show me Apple's credit rating"
+- "What's Tesla's ESG score?"
 - "Who are the main suppliers for AAPL?"
-- "Get forex rates for EUR/USD"
+- "Get the EUR/USD exchange rate history"
+- "What SEC filings has Microsoft made this year?"
+- "Show me NVDA's free cash flow over the last 8 quarters"
+- "What's the economic calendar for next week?"
 
 ## Architecture
-
-The MCP server acts as a bridge between LLMs and your Axion REST API:
 
 ```
 LLM (Claude, etc.) <--> MCP Server <--> Axion REST API
 ```
 
-All API requests are proxied through the MCP server, which translates LLM tool calls into REST API requests.
-
-## Development
-
-### Project Structure
-```
-server/mcp-server/
-├── index.js          # Main MCP server implementation
-├── package.json      # Node.js dependencies
-├── .env.example      # Environment variable template
-└── README.md         # This file
-```
-
-### Adding New Tools
-
-To add new API endpoints:
-
-1. Add the tool definition in `ListToolsRequestSchema` handler
-2. Add the corresponding case in `CallToolRequestSchema` handler
-3. Update this README with the new tool
-
 ## Troubleshooting
 
-### Server won't start
-- Ensure Node.js is installed (v18+ recommended)
-- Check that all dependencies are installed: `npm install`
-- Verify the `.env` file exists and has correct values
+**Tools not appearing in your LLM client** - Restart the client and verify the config file path is correct and absolute.
 
-### Tools not appearing in LLM
-- Restart your MCP client (e.g., Claude Desktop)
-- Check the client configuration file has the correct absolute path
-- Verify the server is running without errors
+**API requests failing** - Check that `API_KEY` is set correctly in your environment or config. Review server logs for detailed error messages.
 
-### API requests failing
-- Ensure your Axion API server is running
-- Verify API_KEY if authentication is required
-- Check server logs for detailed error messages
+**Server won't start** - Ensure Node.js v18+ is installed and the package is installed via `npm i @axionquant/mcp`.
+
+## Get Started
+
+For detailed API documentation, support, or to obtain an API key, visit the [Axion](https://axionquant.com) website.
 
 ## License
 

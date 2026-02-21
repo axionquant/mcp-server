@@ -46,13 +46,10 @@ function buildQueryString(params) {
   return filtered.length > 0 ? `?${filtered.join('&')}` : '';
 }
 
-/**
- * Create the MCP server
- */
 const server = new Server(
   {
     name: "axion-financial-data",
-    version: "2.0.0", // Increment version for major update
+    version: "2.0.0",
   },
   {
     capabilities: {
@@ -61,9 +58,6 @@ const server = new Server(
   }
 );
 
-/**
- * List all available tools - complete parity with Axion JS SDK
- */
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
@@ -361,7 +355,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
 
-      // ---------- Economics (FRED) ----------
+      // ---------- Economics  ----------
       {
         name: "econ_search",
         description: "Search for economic datasets (FRED)",
@@ -486,7 +480,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
 
-      // ---------- Profiles (refined) ----------
+      // ---------- Profiles  ----------
       {
         name: "profiles_profile",
         description: "Get full asset profile for a ticker",
@@ -602,7 +596,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
 
-      // ---------- Filings (SEC) ----------
+      // ---------- Filings  ----------
       {
         name: "filings_recent",
         description: "Get recent SEC filings for a company",
@@ -651,7 +645,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
 
-      // ---------- Financials (detailed line items) ----------
+      // ---------- Financials ----------
       {
         name: "financials_revenue",
         description: "Get historical revenue for a ticker",
@@ -903,9 +897,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-/**
- * Handle tool execution - maps each tool to its correct SDK endpoint
- */
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
@@ -999,7 +990,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
 
-    // ---------- Futures (renamed from 'future' to 'futures') ----------
+    // ---------- Futures ----------
     else if (name === "futures_tickers") {
       endpoint = `futures/tickers${buildQueryString({ exchange: args.exchange })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
