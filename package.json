@@ -1,6 +1,6 @@
 {
   "name": "@axionquant/mcp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MCP Server for Axion Financial Data API",
   "type": "module",
   "bin": {
