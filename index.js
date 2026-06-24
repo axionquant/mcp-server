@@ -99,6 +99,83 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
 
       // ---------- ETF (note plural endpoints) ----------
+       {
+        name: "etf_tickers",
+        description: "List etf tickers, optionally filtered by country or exchange",
+        inputSchema: {
+          type: "object",
+          properties: {
+            country: { type: "string", description: "Filter by country (e.g., 'america')" },
+            exchange: { type: "string", description: "Filter by exchange (e.g., 'NASDAQ')" }
+          }
+        }
+      },
+      {
+        name: "etf_gainers",
+        description: "Get top ETF gainers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_losers",
+        description: "Get top ETF losers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_list_market",
+        description: "Get unique market values for ETFs",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_list_country",
+        description: "Get unique country values for ETFs",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_list_currency",
+        description: "Get unique currency values for ETFs",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_list_sector",
+        description: "Get unique sector values for ETFs",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_list_industry",
+        description: "Get unique industry values for ETFs",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_list_type",
+        description: "Get unique type values for ETFs",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "etf_quote",
+        description: "Get an ETF quote",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "ETF ticker (e.g., SPY)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "etf_prices",
+        description: "Get historical price data for an etf",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "ETF ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" },
+            frame: { type: "string", description: "Time frame (e.g., '1d', '1wk', '1mo')" }
+          },
+          required: ["ticker"]
+        }
+      },
+
       {
         name: "etf_fund",
         description: "Get ETF fund information including ratings and metrics",
@@ -124,6 +201,17 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "etf_exposure",
         description: "Find which ETFs hold a specific stock ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker (e.g., AAPL)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "etf_weights",
+        description: "Find what percentage of each sector industry and stocks make up the ETF",
         inputSchema: {
           type: "object",
           properties: {
@@ -181,8 +269,48 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "stocks_gainers",
+        description: "Get top stock gainers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_losers",
+        description: "Get top stock losers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_list_market",
+        description: "Get unique market values for stocks",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_list_country",
+        description: "Get unique country values for stocks",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_list_currency",
+        description: "Get unique currency values for stocks",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_list_sector",
+        description: "Get unique sector values for stocks",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_list_industry",
+        description: "Get unique industry values for stocks",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "stocks_list_type",
+        description: "Get unique type values for stocks",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
         name: "stocks_quote",
-        description: "Get current details for a stock ticker",
+        description: "Get a stock quote",
         inputSchema: {
           type: "object",
           properties: {
@@ -218,8 +346,33 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "crypto_gainers",
+        description: "Get top crypto gainers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "crypto_losers",
+        description: "Get top crypto losers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "crypto_list_category",
+        description: "Get unique category values for crypto",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "crypto_list_rating",
+        description: "Get unique rating values for crypto",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "crypto_list_type",
+        description: "Get unique type values for crypto",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
         name: "crypto_quote",
-        description: "Get current details for a cryptocurrency",
+        description: "Get a cryptocurrency quote",
         inputSchema: {
           type: "object",
           properties: {
@@ -256,8 +409,33 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "forex_gainers",
+        description: "Get top forex gainers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "forex_losers",
+        description: "Get top forex losers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "forex_list_exchange",
+        description: "Get unique exchange values for forex",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "forex_list_rating",
+        description: "Get unique rating values for forex",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "forex_list_country",
+        description: "Get unique country values for forex",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
         name: "forex_quote",
-        description: "Get current details for a forex pair",
+        description: "Get a forex pair quote",
         inputSchema: {
           type: "object",
           properties: {
@@ -293,8 +471,38 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "futures_gainers",
+        description: "Get top futures gainers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "futures_losers",
+        description: "Get top futures losers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "futures_list_exchange",
+        description: "Get unique exchange values for futures",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "futures_list_currency",
+        description: "Get unique currency values for futures",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "futures_list_timezone",
+        description: "Get unique timezone values for futures",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "futures_list_country",
+        description: "Get unique country values for futures",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
         name: "futures_quote",
-        description: "Get current details for a futures contract",
+        description: "Get a futures contract quote",
         inputSchema: {
           type: "object",
           properties: {
@@ -330,8 +538,33 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "indices_gainers",
+        description: "Get top index gainers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "indices_losers",
+        description: "Get top index losers",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "indices_list_exchange",
+        description: "Get unique exchange values for indices",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "indices_list_timezone",
+        description: "Get unique timezone values for indices",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
+        name: "indices_list_country",
+        description: "Get unique country values for indices",
+        inputSchema: { type: "object", properties: {} }
+      },
+      {
         name: "indices_quote",
-        description: "Get current details for an index",
+        description: "Get an index quote",
         inputSchema: {
           type: "object",
           properties: {
@@ -921,6 +1154,51 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     // ---------- ETF (plural endpoints) ----------
+
+    else if (name === "etf_tickers") {
+      endpoint = `etfs/tickers${buildQueryString({ country: args.country, exchange: args.exchange })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_gainers") {
+      endpoint = `etfs/gainers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_losers") {
+      endpoint = `etfs/losers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_list_market") {
+      endpoint = `etfs/list/market`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_list_country") {
+      endpoint = `etfs/list/country`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_list_currency") {
+      endpoint = `etfs/list/currency`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_list_sector") {
+      endpoint = `etfs/list/sector`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_list_industry") {
+      endpoint = `etfs/list/industry`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_list_type") {
+      endpoint = `etfs/list/type`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_quote") {
+      endpoint = `etfs/${args.ticker}/quote`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_prices") {
+      endpoint = `etfs/${args.ticker}/prices${buildQueryString({ from: args.from, to: args.to, frame: args.frame })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "etf_fund") {
       endpoint = `etfs/${args.ticker}/fund`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
@@ -933,6 +1211,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `etfs/${args.ticker}/exposure`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "etf_weight") {
+      endpoint = `etfs/${args.ticker}/weights`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+
 
     // ---------- Supply Chain ----------
     else if (name === "supply_chain_customers") {
@@ -953,8 +1236,40 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `stocks/tickers${buildQueryString({ country: args.country, exchange: args.exchange })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "stocks_gainers") {
+      endpoint = `stocks/gainers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_losers") {
+      endpoint = `stocks/losers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_list_market") {
+      endpoint = `stocks/list/market`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_list_country") {
+      endpoint = `stocks/list/country`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_list_currency") {
+      endpoint = `stocks/list/currency`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_list_sector") {
+      endpoint = `stocks/list/sector`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_list_industry") {
+      endpoint = `stocks/list/industry`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "stocks_list_type") {
+      endpoint = `stocks/list/type`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "stocks_quote") {
-      endpoint = `stocks/${args.ticker}`;
+      endpoint = `stocks/${args.ticker}/quote`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "stocks_prices") {
@@ -967,8 +1282,28 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `crypto/tickers${buildQueryString({ type: args.type })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "crypto_gainers") {
+      endpoint = `crypto/gainers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "crypto_losers") {
+      endpoint = `crypto/losers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "crypto_list_category") {
+      endpoint = `crypto/list/category`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "crypto_list_rating") {
+      endpoint = `crypto/list/rating`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "crypto_list_type") {
+      endpoint = `crypto/list/type`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "crypto_quote") {
-      endpoint = `crypto/${args.ticker}`;
+      endpoint = `crypto/${args.ticker}/quote`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "crypto_prices") {
@@ -981,8 +1316,28 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `forex/tickers${buildQueryString({ country: args.country, exchange: args.exchange })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "forex_gainers") {
+      endpoint = `forex/gainers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "forex_losers") {
+      endpoint = `forex/losers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "forex_list_exchange") {
+      endpoint = `forex/list/exchange`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "forex_list_rating") {
+      endpoint = `forex/list/rating`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "forex_list_country") {
+      endpoint = `forex/list/country`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "forex_quote") {
-      endpoint = `forex/${args.ticker}`;
+      endpoint = `forex/${args.ticker}/quote`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "forex_prices") {
@@ -995,8 +1350,32 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `futures/tickers${buildQueryString({ exchange: args.exchange })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "futures_gainers") {
+      endpoint = `futures/gainers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "futures_losers") {
+      endpoint = `futures/losers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "futures_list_exchange") {
+      endpoint = `futures/list/exchange`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "futures_list_currency") {
+      endpoint = `futures/list/currency`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "futures_list_timezone") {
+      endpoint = `futures/list/timezone`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "futures_list_country") {
+      endpoint = `futures/list/country`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "futures_quote") {
-      endpoint = `futures/${args.ticker}`;
+      endpoint = `futures/${args.ticker}/quote`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "futures_prices") {
@@ -1009,8 +1388,28 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `indices/tickers${buildQueryString({ exchange: args.exchange })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "indices_gainers") {
+      endpoint = `indices/gainers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "indices_losers") {
+      endpoint = `indices/losers`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "indices_list_exchange") {
+      endpoint = `indices/list/exchange`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "indices_list_timezone") {
+      endpoint = `indices/list/timezone`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "indices_list_country") {
+      endpoint = `indices/list/country`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "indices_quote") {
-      endpoint = `indices/${args.ticker}`;
+      endpoint = `indices/${args.ticker}/quote`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "indices_prices") {
