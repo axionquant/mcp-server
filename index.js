@@ -587,6 +587,28 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["ticker"]
         }
       },
+      {
+        name: "indices_components",
+        description: "Get the component stocks that make up an index",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Index ticker (e.g., 'SPX', 'AXJO')" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "indices_exposure",
+        description: "Find which indices hold a specific ticker as a component",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker to find index exposure for" }
+          },
+          required: ["ticker"]
+        }
+      },
 
       // ---------- Economics  ----------
       {
@@ -622,8 +644,20 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             country: { type: "string", description: "Country code(s) comma-separated" },
             minImportance: { type: "integer", minimum: -1, maximum: 3, description: "Minimum importance (0-3)" },
             currency: { type: "string", description: "Currency code(s) comma-separated" },
-            category: { type: "string", description: "Category (e.g., 'gov', 'infl')" }
+            category: { type: "string", description: "Category (e.g., 'gov', 'infl')" },
+            limit: { type: "integer", description: "Number of events to return (default 10)" }
           }
+        }
+      },
+      {
+        name: "econ_find",
+        description: "Find economic datasets using natural language description (AI-powered)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            query: { type: "string", description: "Natural language description of the data you need" }
+          },
+          required: ["query"]
         }
       },
 
@@ -664,6 +698,17 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             category: { type: "string", description: "Category (e.g., 'business', 'technology')" }
           },
           required: ["category"]
+        }
+      },
+      {
+        name: "news_article",
+        description: "Get the full URL for a news article by its encoded ID",
+        inputSchema: {
+          type: "object",
+          properties: {
+            id: { type: "string", description: "Article ID from news results" }
+          },
+          required: ["id"]
         }
       },
 
@@ -828,6 +873,32 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["ticker", "year", "quarter"]
         }
       },
+      {
+        name: "earnings_transcript",
+        description: "Get earnings call transcript for a ticker, year, and quarter",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            year: { type: "string", description: "Year (e.g., '2024')" },
+            quarter: { type: "string", description: "Quarter (e.g., '2')" }
+          },
+          required: ["ticker", "year", "quarter"]
+        }
+      },
+      {
+        name: "earnings_transcript_sentiment",
+        description: "Get sentiment analysis of an earnings call transcript",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            year: { type: "string", description: "Year (e.g., '2024')" },
+            quarter: { type: "string", description: "Quarter (e.g., '2')" }
+          },
+          required: ["ticker", "year", "quarter"]
+        }
+      },
 
       // ---------- Filings  ----------
       {
@@ -875,6 +946,28 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             ticker: { type: "string", description: "Ticker filter" }
           },
           required: ["year", "quarter"]
+        }
+      },
+      {
+        name: "filings_document_text",
+        description: "Get the full text of an SEC filing document by its document ID",
+        inputSchema: {
+          type: "object",
+          properties: {
+            documentId: { type: "string", description: "Document ID (base64-encoded URL) from filing results" }
+          },
+          required: ["documentId"]
+        }
+      },
+      {
+        name: "filings_document_sentiment",
+        description: "Get sentiment analysis of an SEC filing document",
+        inputSchema: {
+          type: "object",
+          properties: {
+            documentId: { type: "string", description: "Document ID (base64-encoded URL) from filing results" }
+          },
+          required: ["documentId"]
         }
       },
 
@@ -1045,6 +1138,45 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["ticker"]
         }
       },
+      {
+        name: "financials_balance_sheet",
+        description: "Get balance sheet statement for a ticker (optionally by year/quarter)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            year: { type: "integer", description: "Year (e.g., 2024)" },
+            quarter: { type: "integer", description: "Quarter (1-4)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_income_statement",
+        description: "Get income statement for a ticker (optionally by year/quarter)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            year: { type: "integer", description: "Year (e.g., 2024)" },
+            quarter: { type: "integer", description: "Quarter (1-4)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_cash_flow_statement",
+        description: "Get cash flow statement for a ticker (optionally by year/quarter)",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            year: { type: "integer", description: "Year (e.g., 2024)" },
+            quarter: { type: "integer", description: "Quarter (1-4)" }
+          },
+          required: ["ticker"]
+        }
+      },
 
       // ---------- Insiders / Ownership ----------
       {
@@ -1211,7 +1343,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `etfs/${args.ticker}/exposure`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
-    else if (name === "etf_weight") {
+    else if (name === "etf_weights") {
       endpoint = `etfs/${args.ticker}/weights`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
@@ -1416,6 +1548,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `indices/${args.ticker}/prices${buildQueryString({ from: args.from, to: args.to, frame: args.frame })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "indices_components") {
+      endpoint = `indices/${args.ticker}/components`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "indices_exposure") {
+      endpoint = `indices/${args.ticker}/exposure`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
 
     // ---------- Economics ----------
     else if (name === "econ_search") {
@@ -1433,8 +1573,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         country: args.country,
         minImportance: args.minImportance,
         currency: args.currency,
-        category: args.category
+        category: args.category,
+        limit: args.limit
       })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "econ_find") {
+      endpoint = `econ/find${buildQueryString({ query: args.query })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
 
@@ -1453,6 +1598,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
     else if (name === "news_category") {
       endpoint = `news/category/${encodeURIComponent(args.category)}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "news_article") {
+      endpoint = `news/article/${args.id}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
 
@@ -1517,6 +1666,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `earnings/${args.ticker}/report${buildQueryString({ year: args.year, quarter: args.quarter })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "earnings_transcript") {
+      endpoint = `earnings/${args.ticker}/transcript${buildQueryString({ year: args.year, quarter: args.quarter })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "earnings_transcript_sentiment") {
+      const id = btoa(JSON.stringify({ ticker: args.ticker, year: args.year, quarter: args.quarter }));
+      endpoint = `earnings/transcript/sentiment${buildQueryString({ id })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
 
     // ---------- Filings ----------
     else if (name === "filings_recent") {
@@ -1533,6 +1691,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
     else if (name === "filings_search") {
       endpoint = `filings/search${buildQueryString({ year: args.year, quarter: args.quarter, form: args.form, ticker: args.ticker })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "filings_document_text") {
+      endpoint = `filings/document/text${buildQueryString({ documentId: args.documentId })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "filings_document_sentiment") {
+      endpoint = `filings/document/sentiment${buildQueryString({ documentId: args.documentId })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
 
@@ -1591,6 +1757,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
     else if (name === "financials_snapshot") {
       endpoint = `financials/${args.ticker}/snapshot`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_balance_sheet") {
+      endpoint = `financials/statements/${args.ticker}/balance${buildQueryString({ year: args.year, quarter: args.quarter })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_income_statement") {
+      endpoint = `financials/statements/${args.ticker}/income${buildQueryString({ year: args.year, quarter: args.quarter })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_cash_flow_statement") {
+      endpoint = `financials/statements/${args.ticker}/cashflow${buildQueryString({ year: args.year, quarter: args.quarter })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
 
