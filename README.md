@@ -79,6 +79,7 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 |------|-------------|
 | `etf_fund` | Get ETF fund information including ratings and metrics |
 | `etf_holdings` | Get top holdings with weights, shares, and market value |
+| `etf_holdings_all` | Get all ETF holdings with weights and last updated date |
 | `etf_exposure` | Find which ETFs hold a specific stock ticker |
 
 ### Economics (FRED)

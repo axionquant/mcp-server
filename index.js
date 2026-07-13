@@ -199,6 +199,17 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "etf_holdings_all",
+        description: "Get all ETF holdings with weights and last updated date",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "ETF ticker (e.g., SPY)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
         name: "etf_exposure",
         description: "Find which ETFs hold a specific stock ticker",
         inputSchema: {
@@ -1337,6 +1348,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
     else if (name === "etf_holdings") {
       endpoint = `etfs/${args.ticker}/holdings`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "etf_holdings_all") {
+      endpoint = `etfs/${args.ticker}/holdings/all`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "etf_exposure") {
