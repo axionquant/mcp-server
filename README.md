@@ -148,6 +148,15 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `financials_shares_outstanding_diluted` | Historical diluted shares outstanding |
 | `financials_metrics` | Calculated financial metrics |
 | `financials_snapshot` | Snapshot of key financial data |
+| `financials_eps` | TTM earnings per share |
+| `financials_pe` | Price-to-earnings ratio |
+| `financials_market_cap` | Market capitalization |
+| `financials_roe` | Return on equity |
+| `financials_enterprise_value` | Enterprise value |
+| `financials_ebitda` | TTM EBITDA |
+| `financials_debt_to_equity` | Debt-to-equity ratio |
+| `financials_dcf_value` | DCF valuation (enterprise value, fair price, margin of safety, recommendation) |
+| `financials_dcf_rate` | Discount rate / WACC calculation (cost of equity, cost of debt, capital structure) |
 
 ### Insiders & Ownership
 | Tool | Description |

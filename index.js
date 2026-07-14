@@ -1150,6 +1150,122 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
+        name: "financials_dcf_value",
+        description: "Get DCF valuation including enterprise value, fair price, margin of safety, and buy/sell recommendation",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_dcf_rate",
+        description: "Get discount rate / WACC calculation including cost of equity, cost of debt, and capital structure weights",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_eps",
+        description: "Get TTM earnings per share for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_pe",
+        description: "Get price-to-earnings ratio for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" },
+            frame: { type: "string", description: "Resampling frequency: daily, weekly, monthly" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_market_cap",
+        description: "Get market capitalization for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" },
+            frame: { type: "string", description: "Resampling frequency: daily, weekly, monthly" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_roe",
+        description: "Get return on equity for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_enterprise_value",
+        description: "Get enterprise value for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" },
+            frame: { type: "string", description: "Resampling frequency: daily, weekly, monthly" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_ebitda",
+        description: "Get TTM EBITDA for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
+        name: "financials_debt_to_equity",
+        description: "Get debt-to-equity ratio for a ticker",
+        inputSchema: {
+          type: "object",
+          properties: {
+            ticker: { type: "string", description: "Stock ticker" },
+            from: { type: "string", description: "Start date (YYYY-MM-DD)" },
+            to: { type: "string", description: "End date (YYYY-MM-DD)" }
+          },
+          required: ["ticker"]
+        }
+      },
+      {
         name: "financials_balance_sheet",
         description: "Get balance sheet statement for a ticker (optionally by year/quarter)",
         inputSchema: {
@@ -1774,6 +1890,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `financials/${args.ticker}/snapshot`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
+    else if (name === "financials_dcf_value") {
+      endpoint = `financials/dcf/${args.ticker}/value`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_dcf_rate") {
+      endpoint = `financials/dcf/${args.ticker}/rate`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
     else if (name === "financials_balance_sheet") {
       endpoint = `financials/statements/${args.ticker}/balance${buildQueryString({ year: args.year, quarter: args.quarter })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
@@ -1784,6 +1908,34 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
     else if (name === "financials_cash_flow_statement") {
       endpoint = `financials/statements/${args.ticker}/cashflow${buildQueryString({ year: args.year, quarter: args.quarter })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_eps") {
+      endpoint = `financials/${args.ticker}/eps${buildQueryString({ from: args.from, to: args.to })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_pe") {
+      endpoint = `financials/${args.ticker}/pe${buildQueryString({ from: args.from, to: args.to, frame: args.frame })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_market_cap") {
+      endpoint = `financials/${args.ticker}/marketcap${buildQueryString({ from: args.from, to: args.to, frame: args.frame })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_roe") {
+      endpoint = `financials/${args.ticker}/roe${buildQueryString({ from: args.from, to: args.to })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_enterprise_value") {
+      endpoint = `financials/${args.ticker}/ev${buildQueryString({ from: args.from, to: args.to, frame: args.frame })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_ebitda") {
+      endpoint = `financials/${args.ticker}/ebitda${buildQueryString({ from: args.from, to: args.to })}`;
+      result = await makeApiRequest(endpoint, { method: 'GET' });
+    }
+    else if (name === "financials_debt_to_equity") {
+      endpoint = `financials/${args.ticker}/de${buildQueryString({ from: args.from, to: args.to })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
 
