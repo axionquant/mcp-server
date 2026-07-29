@@ -128,7 +128,7 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 |------|-------------|
 | `filings_recent` | Get recent filings, optionally filtered by form type |
 | `filings_forms` | Get filings by form type (e.g. `10-K`, `8-K`) |
-| `filings_desc_forms` | List all available SEC form types |
+| `filings_list_forms` | List all available SEC form types |
 | `filings_search` | Search filings by year/quarter |
 
 ### Financials

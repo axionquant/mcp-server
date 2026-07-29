@@ -941,7 +941,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: "filings_desc_forms",
+        name: "filings_list_forms",
         description: "List available SEC form types and their descriptions",
         inputSchema: { type: "object", properties: {} }
       },
@@ -1816,8 +1816,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       endpoint = `filings/${args.ticker}/forms/${args.formType}${buildQueryString({ year: args.year, quarter: args.quarter, limit: args.limit })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
-    else if (name === "filings_desc_forms") {
-      endpoint = `filings/desc/forms`;
+    else if (name === "filings_list_forms") {
+      endpoint = `filings/list/forms`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "filings_search") {
