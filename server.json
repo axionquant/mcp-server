@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.axionquant/axion",
+  "name": "io.github.axionquant/axionquant",
   "description": "MCP server for AxionQuant financial data, including market, economic, SEC filing, and company data.",
   "repository": {
     "url": "https://github.com/axionquant/mcp-server",
@@ -11,7 +11,7 @@
     {
       "registryType": "npm",
       "identifier": "@axionquant/mcp",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "transport": {
         "type": "stdio"
       },
