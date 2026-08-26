@@ -1,7 +1,7 @@
 {
   "name": "@axionquant/mcp",
-  "version": "1.0.8",
-  "description": "MCP Server for Axion Financial Data API",
+  "version": "1.0.9",
+  "description": "Official Model Context Protocol (MCP) server for the AxionQuant financial data API. Give Claude, GPT, and other LLMs real-time and historical stock, crypto, forex, futures, and economic data, plus SEC filings and company financials.",
   "type": "module",
   "bin": {
     "axion-mcp": "index.js"
@@ -14,12 +14,32 @@
   },
   "keywords": [
     "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "axionquant",
+    "axion",
+    "claude",
+    "claude-desktop",
+    "llm",
+    "ai-agent",
     "financial-data",
-    "stocks",
-    "crypto",
-    "etf"
+    "financial-api",
+    "stock-api",
+    "market-data",
+    "crypto-api",
+    "cryptocurrency",
+    "forex-api",
+    "futures-api",
+    "etf",
+    "sec-filings",
+    "economic-data",
+    "fred",
+    "quant",
+    "quantitative-finance",
+    "typescript",
+    "nodejs"
   ],
-  "author": "Axion",
+  "author": "AxionQuant (https://axionquant.com)",
   "license": "MIT",
   "main": "index.js",
   "devDependencies": {},
@@ -30,5 +50,5 @@
   "bugs": {
     "url": "https://github.com/axionquant/mcp-server/issues"
   },
-  "homepage": "https://github.com/axionquant/mcp-server#readme"
+  "homepage": "https://axionquant.com"
 }

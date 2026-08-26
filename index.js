@@ -919,8 +919,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           type: "object",
           properties: {
             ticker: { type: "string", description: "Stock ticker" },
-            limit: { type: "integer", description: "Number of filings to return" },
-            form: { type: "string", description: "Filter by form type (e.g., '10-K')" }
+            form: { type: "string", description: "Filter by form type (e.g., '10-K')" },
+            limit: { type: "integer", description: "Number of filings to return" }
           },
           required: ["ticker"]
         }
@@ -1809,7 +1809,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
     // ---------- Filings ----------
     else if (name === "filings_recent") {
-      endpoint = `filings/${args.ticker}${buildQueryString({ limit: args.limit, form: args.form })}`;
+      endpoint = `filings/${args.ticker}${buildQueryString({ form: args.form, limit: args.limit })}`;
       result = await makeApiRequest(endpoint, { method: 'GET' });
     }
     else if (name === "filings_forms") {

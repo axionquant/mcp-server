@@ -1,6 +1,35 @@
-# Axion MCP Server
+# AxionQuant MCP Server
 
-A Model Context Protocol (MCP) server that gives LLMs access to the [Axion](https://axionquant.com) financial data API - covering stocks, crypto, forex, futures, indices, ETFs, economics, news, sentiment, filings, financials, and more.
+**Give Claude, ChatGPT, and other LLMs real-time financial data.** A Model Context Protocol (MCP) server for the [AxionQuant](https://axionquant.com) financial data API - covering stocks, crypto, forex, futures, indices, ETFs, economic data, news, sentiment, SEC filings, financials, insider trading, ESG, and credit ratings.
+
+[![npm version](https://img.shields.io/npm/v/@axionquant/mcp.svg)](https://www.npmjs.com/package/@axionquant/mcp)
+[![npm downloads](https://img.shields.io/npm/dm/@axionquant/mcp.svg)](https://www.npmjs.com/package/@axionquant/mcp)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
+
+**[Website](https://axionquant.com)** · **[Documentation](https://axionquant.com/docs)** · **[Get an API Key](https://axionquant.com/dashboard/api-keys)**
+
+The AxionQuant MCP server plugs directly into Claude Desktop and any other MCP-compatible client, letting an LLM answer natural-language financial questions - stock quotes, crypto prices, SEC filings, earnings transcripts, economic indicators, and more - using live data instead of stale training data.
+
+## Why AxionQuant MCP?
+
+- **100+ tools in one server** - market data, fundamentals, alternative data, and macro indicators across every major asset class
+- **Works with any MCP client** - Claude Desktop today, and any client that supports stdio transport
+- **Natural-language financial queries** - no need to learn an API schema; just ask
+- **One API key, one config block** - minimal setup to get an LLM talking to live market data
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [Claude Desktop](#claude-desktop)
+  - [Other MCP Clients](#other-mcp-clients)
+- [Available Tools](#available-tools)
+- [Example Queries](#example-queries)
+- [Architecture](#architecture)
+- [Troubleshooting](#troubleshooting)
+- [FAQ](#faq)
+- [Get Started](#get-started)
+- [License](#license)
 
 ## Installation
 
@@ -10,11 +39,11 @@ npm i @axionquant/mcp
 
 ## Configuration
 
-[Get your free API key](https://axionquant.com/dashboard/api-keys)
+[Get your free AxionQuant API key](https://axionquant.com/dashboard/api-keys)
 
 ### Claude Desktop
 
-Add the following to your Claude Desktop config file:
+Add the following to your Claude Desktop MCP config file to connect AxionQuant's financial data tools:
 
 **MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
@@ -40,6 +69,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 ## Available Tools
 
 ### Stocks
+
+Real-time quotes and historical price data for US and global equities.
+
 | Tool | Description |
 |------|-------------|
 | `stocks_tickers` | List stock tickers, optionally filtered by country or exchange |
@@ -47,6 +79,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `stocks_prices` | Get historical price data (supports `from`, `to`, `frame`) |
 
 ### Crypto
+
+Cryptocurrency pricing and market data.
+
 | Tool | Description |
 |------|-------------|
 | `crypto_tickers` | List cryptocurrency tickers, optionally filtered by type |
@@ -54,6 +89,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `crypto_prices` | Get historical price data |
 
 ### Forex
+
+Foreign exchange rates and currency pair data.
+
 | Tool | Description |
 |------|-------------|
 | `forex_tickers` | List forex pairs, optionally filtered by country or exchange |
@@ -61,6 +99,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `forex_prices` | Get historical price data |
 
 ### Futures
+
+Futures contract pricing and market data.
+
 | Tool | Description |
 |------|-------------|
 | `futures_tickers` | List futures tickers, optionally filtered by exchange |
@@ -68,6 +109,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `futures_prices` | Get historical price data |
 
 ### Indices
+
+Market index pricing and composition data.
+
 | Tool | Description |
 |------|-------------|
 | `indices_tickers` | List index tickers, optionally filtered by exchange |
@@ -75,6 +119,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `indices_prices` | Get historical price data |
 
 ### ETFs
+
+ETF holdings, exposure, and fund metrics.
+
 | Tool | Description |
 |------|-------------|
 | `etf_fund` | Get ETF fund information including ratings and metrics |
@@ -83,6 +130,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `etf_exposure` | Find which ETFs hold a specific stock ticker |
 
 ### Economics (FRED)
+
+Macroeconomic datasets and calendar events sourced from FRED.
+
 | Tool | Description |
 |------|-------------|
 | `econ_search` | Search for economic datasets |
@@ -90,6 +140,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `econ_calendar` | Get economic calendar events (filterable by country, currency, category, importance) |
 
 ### News
+
+Market news headlines by company, country, or category.
+
 | Tool | Description |
 |------|-------------|
 | `news_general` | Get general market news headlines |
@@ -98,6 +151,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `news_category` | Get news by category (e.g. `business`, `technology`) |
 
 ### Sentiment
+
+Social, news, and analyst sentiment scoring.
+
 | Tool | Description |
 |------|-------------|
 | `sentiment_all` | Get combined sentiment (social + news + analyst) for a ticker |
@@ -106,6 +162,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `sentiment_analyst` | Get analyst/AI sentiment |
 
 ### Profiles
+
+Company profiles, analyst recommendations, and key statistics.
+
 | Tool | Description |
 |------|-------------|
 | `profiles_profile` | Get full asset profile |
@@ -116,6 +175,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `profiles_info` | Get company info / summary profile |
 
 ### Earnings
+
+Earnings history, trends, and quarterly reports.
+
 | Tool | Description |
 |------|-------------|
 | `earnings_history` | Get historical earnings |
@@ -124,6 +186,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `earnings_report` | Get earnings report for a specific year and quarter |
 
 ### SEC Filings
+
+Search and retrieve SEC filings by form type and date.
+
 | Tool | Description |
 |------|-------------|
 | `filings_recent` | Get recent filings, optionally filtered by form type |
@@ -132,6 +197,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `filings_search` | Search filings by year/quarter |
 
 ### Financials
+
+Financial statements, historical fundamentals, valuation ratios, and DCF analysis.
+
 | Tool | Description |
 |------|-------------|
 | `financials_revenue` | Historical revenue |
@@ -159,6 +227,9 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `financials_dcf_rate` | Discount rate / WACC calculation (cost of equity, cost of debt, capital structure) |
 
 ### Insiders & Ownership
+
+Insider trading activity and institutional ownership data.
+
 | Tool | Description |
 |------|-------------|
 | `insiders_funds` | Fund ownership data |
@@ -169,11 +240,17 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `insiders_transactions` | Insider transactions |
 
 ### ESG
+
+Environmental, social, and governance scoring.
+
 | Tool | Description |
 |------|-------------|
 | `esg_data` | Get ESG (Environmental, Social, Governance) scores for a ticker |
 
 ### Supply Chain
+
+Company customer, supplier, and peer relationships.
+
 | Tool | Description |
 |------|-------------|
 | `supply_chain_customers` | Get a company's customers |
@@ -181,12 +258,18 @@ The server uses stdio transport and is compatible with any MCP client. Set the `
 | `supply_chain_suppliers` | Get a company's suppliers |
 
 ### Credit
+
+Credit ratings from the S&P database.
+
 | Tool | Description |
 |------|-------------|
 | `credit_search` | Search the S&P credit rating database by organization name |
 | `credit_ratings` | Get credit ratings for a specific organization by ID |
 
 ### Web Traffic
+
+Website traffic estimates by company.
+
 | Tool | Description |
 |------|-------------|
 | `webtraffic_traffic` | Get website traffic data for a company |
@@ -220,9 +303,23 @@ LLM (Claude, etc.) <--> MCP Server <--> Axion REST API
 
 **Server won't start** - Ensure Node.js v18+ is installed and the package is installed via `npm i @axionquant/mcp`.
 
+## FAQ
+
+**What is the AxionQuant MCP server?**
+It's a Model Context Protocol server that connects LLMs like Claude to the AxionQuant financial data API, so you can ask natural-language questions about stocks, crypto, earnings, SEC filings, and more instead of writing API calls by hand.
+
+**Does the AxionQuant MCP server work with Claude Desktop?**
+Yes - add it to your Claude Desktop config file as shown above. It also works with any client that supports the Model Context Protocol over stdio transport.
+
+**Is there a free AxionQuant API key?**
+Yes - you can [get a free API key](https://axionquant.com/dashboard/api-keys) from the AxionQuant dashboard.
+
+**What financial data can I query through MCP?**
+Stocks, crypto, forex, futures, indices, and ETFs, plus financial statements, earnings, SEC filings, insider trading, sentiment, news, economic (FRED) data, credit ratings, ESG scores, supply chain relationships, and web traffic estimates - over 100 tools in total.
+
 ## Get Started
 
-For detailed API documentation, support, or to obtain an API key, visit the [Axion](https://axionquant.com) website.
+For full API documentation, visit the [AxionQuant docs](https://axionquant.com/docs). For support or to obtain an API key, visit [axionquant.com](https://axionquant.com).
 
 ## License
 
