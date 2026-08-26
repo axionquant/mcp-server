@@ -1,9 +1,9 @@
 {
   "name": "@axionquant/mcp",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Official Model Context Protocol (MCP) server for the AxionQuant financial data API. Give Claude, GPT, and other LLMs real-time and historical stock, crypto, forex, futures, and economic data, plus SEC filings and company financials.",
   "type": "module",
-  "mcpName": "io.github.axionquant/mcp",
+  "mcpName": "io.github.axionquant/axionquant",
   "bin": {
     "axion-mcp": "index.js"
   },
