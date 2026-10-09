@@ -662,7 +662,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "econ_find",
-        description: "Find economic datasets using natural language description (AI-powered)",
+        description: "Find economic datasets using natural language description",
         inputSchema: {
           type: "object",
           properties: {
@@ -725,17 +725,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
       // ---------- Sentiment ----------
       {
-        name: "sentiment_all",
-        description: "Get combined sentiment (social, news, analyst) for a ticker",
-        inputSchema: {
-          type: "object",
-          properties: {
-            ticker: { type: "string", description: "Stock ticker" }
-          },
-          required: ["ticker"]
-        }
-      },
-      {
         name: "sentiment_social",
         description: "Get social media sentiment for a ticker",
         inputSchema: {
@@ -759,7 +748,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "sentiment_analyst",
-        description: "Get analyst/AI sentiment for a ticker",
+        description: "Get analyst sentiment for a ticker",
         inputSchema: {
           type: "object",
           properties: {
@@ -1737,10 +1726,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     // ---------- Sentiment ----------
-    else if (name === "sentiment_all") {
-      endpoint = `sentiment/${args.ticker}/all`;
-      result = await makeApiRequest(endpoint, { method: 'GET' });
-    }
     else if (name === "sentiment_social") {
       endpoint = `sentiment/${args.ticker}/social`;
       result = await makeApiRequest(endpoint, { method: 'GET' });

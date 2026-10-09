@@ -156,10 +156,9 @@ Social, news, and analyst sentiment scoring.
 
 | Tool | Description |
 |------|-------------|
-| `sentiment_all` | Get combined sentiment (social + news + analyst) for a ticker |
 | `sentiment_social` | Get social media sentiment |
 | `sentiment_news` | Get news sentiment |
-| `sentiment_analyst` | Get analyst/AI sentiment |
+| `sentiment_analyst` | Get analyst sentiment |
 
 ### Profiles
 
